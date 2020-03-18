@@ -6,7 +6,8 @@
   
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="style.css">
-  
+  <script src="forecast.js" type="text/javascript"></script>
+    
   <title>Ninja Weather</title>
 </head>
 <body>
@@ -36,19 +37,18 @@
 
             
          </div>
-         <script src ="scripts/forecast.js"></script>
-    <!-- <script src="scripts/app.js"></script> -->
-
+       
 
 <script>
-  const cityForm = document.querySelector('form');
+const cityForm = document.querySelector('form');
 const card = document.querySelector('.card');
 const details = document.querySelector('.details');
 const updateUI = (data)=> {
 
 const cityDets = data.cityDets;
 const weather = data.weather;
-console.log(weather);
+console.log("UPDATEUI",data);
+console.log("UPDATEUI",weather);
 details.innerHTML=`
             <h5 class="my-3">${cityDets.EnglishName}</h5>
                     <div class="my-3">${weather.WeatherText}</div>
@@ -71,7 +71,7 @@ const cityDets = await getCity(city);
 
 
 const weather = await getWeather(cityDets.key);
-
+console.log("updatecity",cityDets,weather)
 return {cityDets, weather};
 };
 
@@ -83,6 +83,7 @@ cityForm.addEventListener('submit', e=>{
 
 
 const city =cityForm.city.value.trim();
+console.log("CITY",city);
 cityForm.reset();
 
 
@@ -90,19 +91,15 @@ cityForm.reset();
 
 
 updateCity(city)
- .then(data => console.log(data))
- .catch(err => console.log(err));
+ .then(data => {
+   console.log(data);
+   updateUI(data);  
+  }
+  )
+ .catch(err => console.log("Error", err));
 });
+
 </script>
-
-
-
-
-
-
-
-
-
 
 </body>
 
